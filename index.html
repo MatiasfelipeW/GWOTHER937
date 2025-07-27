@@ -61,6 +61,12 @@
       animation: pulse 1.5s infinite;
     }
     
+    .live-info {
+      margin: 15px 0;
+      font-style: italic;
+      color: #e0e0e0;
+    }
+    
     @keyframes pulse {
       0% {
         box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
@@ -107,6 +113,9 @@
     <h1 data-translate="title">Gwother937</h1>
     <p data-translate="description">🔥 Atrévete a descubrir mi mundo exclusivo 🔥<br>
     Contenido premium, sensualidad sin límites y acceso directo a mí.</p>
+    
+    <!-- Nuevo texto añadido -->
+    <p class="live-info" data-translate="live_info">En el botón de transmisión en vivo encontrarás acceso directo a la página en la que estaré en vivo. Únete a mi canal privado de Telegram y sigue mis streams.</p>
 
     <!-- BOTONES REDES -->
     <div class="social-btns">
@@ -134,6 +143,7 @@
       es: {
         title: "Gwother937",
         description: "🔥 Atrévete a descubrir mi mundo exclusivo 🔥<br>Contenido premium, sensualidad sin límites y acceso directo a mí.",
+        live_info: "En el botón de transmisión en vivo encontrarás acceso directo a la página en la que estaré en vivo. Únete a mi canal privado de Telegram y sigue mis streams.",
         onlyfans: "OnlyFans",
         telegram: "Telegram",
         instagram: "Instagram",
@@ -146,6 +156,7 @@
       en: {
         title: "Gwother937",
         description: "🔥 Dare to discover my exclusive world 🔥<br>Premium content, limitless sensuality and direct access to me.",
+        live_info: "In the live streaming button you'll find direct access to the page where I'll be live. Join my private Telegram channel and follow my streams.",
         onlyfans: "OnlyFans",
         telegram: "Telegram",
         instagram: "Instagram",
@@ -158,6 +169,7 @@
       de: {
         title: "Gwother937",
         description: "🔥 Wage es, meine exklusive Welt zu entdecken 🔥<br>Premium-Inhalte, grenzenlose Sinnlichkeit und direkter Zugang zu mir.",
+        live_info: "Im Live-Streaming-Button findest du direkten Zugang zu der Seite, auf der ich live sein werde. Trete meinem privaten Telegram-Kanal bei und verfolge meine Streams.",
         onlyfans: "OnlyFans",
         telegram: "Telegram",
         instagram: "Instagram",
@@ -170,6 +182,7 @@
       ru: {
         title: "Gwother937",
         description: "🔥 Осмельтесь открыть для себя мой эксклюзивный мир 🔥<br>Премиум-контент, безграничная чувственность и прямой доступ ко мне.",
+        live_info: "В кнопке прямой трансляции вы найдете прямой доступ к странице, где я буду в эфире. Присоединяйтесь к моему приватному Telegram-каналу и следите за моими трансляциями.",
         onlyfans: "OnlyFans",
         telegram: "Telegram",
         instagram: "Instagram",
@@ -182,6 +195,7 @@
       zh: {
         title: "Gwother937",
         description: "🔥 敢于探索我的专属世界 🔥<br>优质内容，无限性感，直接与我互动。",
+        live_info: "在直播按钮中，您将找到我将直播的页面的直接访问链接。加入我的私人Telegram频道并关注我的直播。",
         onlyfans: "OnlyFans",
         telegram: "Telegram",
         instagram: "Instagram",
@@ -237,30 +251,7 @@
     document.addEventListener('DOMContentLoaded', function() {
       const preferredLanguage = localStorage.getItem('preferredLanguage') || 'es';
       changeLanguage(preferredLanguage);
-      
-      // Opcional: Verificar si estás en vivo y actualizar el botón
-      // Esta parte dependería de tu API o sistema para saber si estás transmitiendo
-      // checkLiveStatus();
     });
-    
-    // Función de ejemplo para verificar estado de transmisión
-    /*
-    function checkLiveStatus() {
-      fetch('TU_API_DE_ESTADO_LIVE')
-        .then(response => response.json())
-        .then(data => {
-          if (data.isLive) {
-            document.getElementById('liveButton').classList.add('live-active');
-          } else {
-            document.getElementById('liveButton').classList.remove('live-active');
-          }
-        })
-        .catch(error => console.error('Error checking live status:', error));
-    }
-    
-    // Verificar cada minuto
-    setInterval(checkLiveStatus, 60000);
-    */
   </script>
 </body>
 </html>
