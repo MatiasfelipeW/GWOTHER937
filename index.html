@@ -63,45 +63,47 @@
       font-weight: bold;
       animation: pulse 1s infinite;
       border: none;
+      position: relative;
+      z-index: 1;
     }
     
-   @keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.8),
-                0 0 0 0 rgba(255, 50, 50, 0.6); /* Doble sombra para efecto más intenso */
-    transform: scale(1); /* Estado normal */
-  }
-  50% {
-    box-shadow: 0 0 0 20px rgba(255, 0, 0, 0), /* Primer halo - grande */
-                0 0 0 40px rgba(255, 50, 50, 0); /* Segundo halo - más grande */
-    transform: scale(1.05); /* Ligero aumento de tamaño */
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0),
-                0 0 0 0 rgba(255, 50, 50, 0);
-    transform: scale(1); /* Vuelve al tamaño normal */
-  }
-}
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.8),
+                    0 0 0 0 rgba(255, 50, 50, 0.6);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 0 20px rgba(255, 0, 0, 0),
+                    0 0 0 40px rgba(255, 50, 50, 0);
+        transform: scale(1.05);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0),
+                    0 0 0 0 rgba(255, 50, 50, 0);
+        transform: scale(1);
+      }
+    }
 
-/* Efecto adicional para el indicador de live */
-.live-indicator {
-  display: inline-block;
-  animation: blink 0.5s infinite alternate;
-  margin-left: 5px;
-  font-size: 1.2em;
-  vertical-align: middle;
-}
+    .live-indicator {
+      display: inline-block;
+      animation: blink 0.5s infinite alternate;
+      margin-left: 5px;
+      font-size: 1.2em;
+      vertical-align: middle;
+    }
 
-@keyframes blink {
-  from { opacity: 0.3; }
-  to { opacity: 1; }
-}
+    @keyframes blink {
+      from { opacity: 0.3; }
+      to { opacity: 1; }
+    }
+
     /* Contenido principal */
     .main-content {
       position: relative;
       text-align: center;
       padding-top: 5%;
-      padding-bottom: 5%;
+      padding-bottom: 80px; /* Espacio para el footer */
       z-index: 1;
     }
 
@@ -244,25 +246,62 @@
       box-shadow: 0 0 15px rgba(255,255,255,0.5);
     }
 
-  
+    /* Calendario de streams */
+    .stream-schedule {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 40px auto;
+      max-width: 800px;
+      border: 1px solid #ff0000;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+    }
 
+    .calendar {
+      display: flex;
+      gap: 20px;
+    }
+
+    .event-form {
+      flex: 1;
+    }
+
+    .events-list {
+      flex: 1;
+    }
+
+    #events {
+      list-style: none;
+      padding: 0;
+    }
+
+    #events li {
+      background: rgba(255, 0, 0, 0.2);
+      padding: 10px;
+      margin-bottom: 10px;
+      border-left: 3px solid #ff0000;
+      border-radius: 5px;
+    }
+
+    /* Footer */
     footer {
-  text-align: center;
-  padding: 10px;
-  color: #ccc;
-  font-size: 0.9rem;
-  background: rgb(255, 0, 0); /* Opcional */
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-}
+      text-align: center;
+      padding: 15px;
+      color: #ccc;
+      font-size: 0.9rem;
+      background: rgba(255, 0, 0, 0.8);
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
 
     /* Responsive para móviles */
     @media (max-width: 768px) {
       .main-content {
         padding-top: 15%;
+        padding-bottom: 100px;
       }
       
       .model-title {
@@ -284,6 +323,10 @@
         padding: 8px 15px;
         min-width: 100px;
         font-size: 0.9rem;
+      }
+
+      .calendar {
+        flex-direction: column;
       }
 
       /* Ajustar posición Z en móviles */
@@ -374,6 +417,23 @@
       <a href="https://wa.me/573001112233" target="_blank" class="btn btn-success" data-translate="whatsapp">WhatsApp</a>
       <a href="https://www.tiktok.com/@Gwother937" target="_blank" class="btn btn-dark" data-translate="tiktok">TikTok</a>
       <a href="https://www.flirt4free.com" target="_blank" class="btn btn-info text-white" data-translate="flirt4free">Flirt4Free</a>
+    </div>
+
+    <!-- CALENDARIO DE STREAMS -->
+    <div class="stream-schedule">
+      <h2>📅 Próximos Streams</h2>
+      <div class="calendar">
+        <div class="event-form">
+          <h3>Agregar nuevo stream</h3>
+          <input type="text" id="event-title" placeholder="Título del stream" class="form-control mb-2">
+          <input type="datetime-local" id="event-date" class="form-control mb-2">
+          <button id="add-event" class="btn btn-danger">Programar</button>
+        </div>
+        <div class="events-list">
+          <h3>Eventos programados</h3>
+          <ul id="events"></ul>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -501,6 +561,70 @@
       const preferredLanguage = localStorage.getItem('preferredLanguage') || 'es';
       changeLanguage(preferredLanguage);
     });
+
+    // =============================================
+    // CÓDIGO PARA EL CALENDARIO DE STREAMS
+    // =============================================
+
+    // Guardar eventos
+    let events = JSON.parse(localStorage.getItem('streamEvents')) || [];
+
+    // Mostrar eventos
+    function renderEvents() {
+      const list = document.getElementById('events');
+      list.innerHTML = events.map(event => `
+        <li>
+          <strong>${event.title}</strong><br>
+          📅 ${new Date(event.date).toLocaleString()}
+          <button class="btn btn-sm btn-outline-light ms-2" onclick="addToCalendar('${event.title}', '${event.date}')">
+            🗓️ Recordar
+          </button>
+        </li>
+      `).join('');
+    }
+
+    // Agregar nuevo evento
+    document.getElementById('add-event').addEventListener('click', () => {
+      const title = document.getElementById('event-title').value;
+      const date = document.getElementById('event-date').value;
+      
+      if (title && date) {
+        events.push({ title, date });
+        localStorage.setItem('streamEvents', JSON.stringify(events));
+        renderEvents();
+        
+        // Limpiar formulario
+        document.getElementById('event-title').value = '';
+        document.getElementById('event-date').value = '';
+        
+        // Opcional: Mostrar notificación
+        if (Notification.permission === "granted") {
+          new Notification(`🎥 Stream programado: ${title}`, {
+            body: `Se ha agregado a tu calendario para ${new Date(date).toLocaleString()}`
+          });
+        }
+      } else {
+        alert('Por favor completa todos los campos');
+      }
+    });
+
+    // Añadir a Google Calendar
+    function addToCalendar(title, date) {
+      const startDate = new Date(date).toISOString().replace(/-|:|\.\d+/g, '');
+      const endDate = new Date(new Date(date).getTime() + 2 * 60 * 60 * 1000).toISOString().replace(/-|:|\.\d+/g, '');
+      
+      const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startDate}/${endDate}&details=Transmisión en vivo de ${encodeURIComponent(title)}&location=${encodeURIComponent(window.location.href)}`;
+      
+      window.open(url, '_blank');
+      
+      // Opcional: Solicitar permisos para notificaciones
+      if (Notification.permission !== "granted") {
+        Notification.requestPermission();
+      }
+    }
+
+    // Cargar eventos al iniciar
+    document.addEventListener('DOMContentLoaded', renderEvents);
   </script>
 </body>
 </html>
