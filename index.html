@@ -12,12 +12,14 @@
   <link rel="stylesheet" href="styles.css">
   
   <style>
-    /* Estilos adicionales para el selector de idioma */
-    .language-selector {
+    /* Estilos adicionales para los botones superiores */
+    .top-buttons {
       position: absolute;
       top: 20px;
       right: 20px;
       z-index: 1000;
+      display: flex;
+      gap: 10px;
     }
     
     .dropdown-toggle::after {
@@ -50,12 +52,40 @@
       margin-top: 30px;
       background-color: #ff0202;
     }
+    
+    /* Estilo especial para el botón de live */
+    .btn-live {
+      background-color: #ff0000;
+      color: white;
+      font-weight: bold;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+      }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Selector de idioma -->
-  <div class="language-selector">
+  <!-- Botones superiores -->
+  <div class="top-buttons">
+    <!-- Botón de transmisión en vivo -->
+    <a href="https://www.flirt4free.com" class="btn btn-live" id="liveButton">
+      <span class="d-none d-md-inline">Transmisión en Vivo</span>
+      <span class="d-inline d-md-none">LIVE</span>
+      <span class="live-indicator">●</span>
+    </a>
+    
+    <!-- Selector de idioma -->
     <div class="dropdown">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
         Español
@@ -110,7 +140,8 @@
         whatsapp: "WhatsApp",
         tiktok: "TikTok",
         flirt4free: "Flirt4Free",
-        copyright: "© 2025 Gwother937. Todos los derechos reservados."
+        copyright: "© 2025 Gwother937. Todos los derechos reservados.",
+        live: "Transmisión en Vivo"
       },
       en: {
         title: "Gwother937",
@@ -121,7 +152,8 @@
         whatsapp: "WhatsApp",
         tiktok: "TikTok",
         flirt4free: "Flirt4Free",
-        copyright: "© 2025 Gwother937. All rights reserved."
+        copyright: "© 2025 Gwother937. All rights reserved.",
+        live: "Live Streaming"
       },
       de: {
         title: "Gwother937",
@@ -132,7 +164,8 @@
         whatsapp: "WhatsApp",
         tiktok: "TikTok",
         flirt4free: "Flirt4Free",
-        copyright: "© 2025 Gwother937. Alle Rechte vorbehalten."
+        copyright: "© 2025 Gwother937. Alle Rechte vorbehalten.",
+        live: "Live-Streaming"
       },
       ru: {
         title: "Gwother937",
@@ -143,7 +176,8 @@
         whatsapp: "WhatsApp",
         tiktok: "TikTok",
         flirt4free: "Flirt4Free",
-        copyright: "© 2025 Gwother937. Все права защищены."
+        copyright: "© 2025 Gwother937. Все права защищены.",
+        live: "Прямой эфир"
       },
       zh: {
         title: "Gwother937",
@@ -154,7 +188,8 @@
         whatsapp: "WhatsApp",
         tiktok: "TikTok",
         flirt4free: "Flirt4Free",
-        copyright: "© 2025 Gwother937。保留所有权利。"
+        copyright: "© 2025 Gwother937。保留所有权利。",
+        live: "直播"
       }
     };
 
@@ -179,6 +214,12 @@
         }
       });
       
+      // Actualizar texto del botón de live
+      const liveButton = document.getElementById('liveButton');
+      if (translations[lang] && translations[lang]['live']) {
+        liveButton.querySelector('.d-none.d-md-inline').textContent = translations[lang]['live'];
+      }
+      
       // Guardar preferencia de idioma
       localStorage.setItem('preferredLanguage', lang);
     }
@@ -196,7 +237,30 @@
     document.addEventListener('DOMContentLoaded', function() {
       const preferredLanguage = localStorage.getItem('preferredLanguage') || 'es';
       changeLanguage(preferredLanguage);
+      
+      // Opcional: Verificar si estás en vivo y actualizar el botón
+      // Esta parte dependería de tu API o sistema para saber si estás transmitiendo
+      // checkLiveStatus();
     });
+    
+    // Función de ejemplo para verificar estado de transmisión
+    /*
+    function checkLiveStatus() {
+      fetch('TU_API_DE_ESTADO_LIVE')
+        .then(response => response.json())
+        .then(data => {
+          if (data.isLive) {
+            document.getElementById('liveButton').classList.add('live-active');
+          } else {
+            document.getElementById('liveButton').classList.remove('live-active');
+          }
+        })
+        .catch(error => console.error('Error checking live status:', error));
+    }
+    
+    // Verificar cada minuto
+    setInterval(checkLiveStatus, 60000);
+    */
   </script>
 </body>
 </html>
