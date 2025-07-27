@@ -50,9 +50,9 @@ body::after {
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  border: 3px solid #fff;
+  border: 3px solid #3b3a3a;
   object-fit: cover;
-  box-shadow: 0 0 15px rgba(255, 0, 102, 0.7);
+  box-shadow: 0 0 15px rgb(255, 0, 0);
   margin: 0 auto 20px;
   display: block;
 }
@@ -61,7 +61,7 @@ body::after {
 h1 {
   font-size: 2.5rem;
   font-weight: bold;
-  text-shadow: 0 0 10px #f06;
+  text-shadow: 0 0 10px rgb(255, 0, 0);
   margin-bottom: 20px;
 }
 
@@ -92,14 +92,22 @@ p {
   box-shadow: 0 0 15px rgba(255,255,255,0.5);
 }
 
-/* Footer */
 footer {
   text-align: center;
   padding: 20px;
   color: #ccc;
   font-size: 0.9rem;
-  position: relative;
-  z-index: 1;
+  background: rgb(255, 0, 0); /* Opcional */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+/* Añade margen inferior al contenido principal para que no quede detrás del footer */
+.main-content {
+  margin-bottom: 80px; /* Ajusta según el padding del footer */
 }
 
 /* Responsive para móviles */
@@ -128,3 +136,15 @@ footer {
     font-size: 0.9rem;
   }
 }
+
+/* Estilo especial para el botón de live */
+.btn-live {
+  background-color: #ff0000;
+  color: white;
+  font-weight: bold;
+  animation: pulse 1s infinite;
+  border: none;
+  position: relative; /* Añadido para mejor efecto */
+  z-index: 1; /* Asegura que el efecto esté detrás del botón */
+}
+
