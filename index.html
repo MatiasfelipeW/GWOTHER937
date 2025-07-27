@@ -246,8 +246,8 @@
       box-shadow: 0 0 15px rgba(255,255,255,0.5);
     }
 
-    /* Calendario de streams */
-    .stream-schedule {
+    /* Nuevos estilos para el calendario mejorado */
+    .admin-calendar {
       background: rgba(0, 0, 0, 0.7);
       padding: 20px;
       border-radius: 10px;
@@ -256,31 +256,72 @@
       border: 1px solid #ff0000;
       box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
     }
-
-    .calendar {
-      display: flex;
-      gap: 20px;
+    
+    .admin-event-form {
+      margin-bottom: 20px;
     }
-
-    .event-form {
-      flex: 1;
+    
+    .published-events {
+      margin-top: 20px;
     }
-
-    .events-list {
-      flex: 1;
-    }
-
-    #events {
-      list-style: none;
-      padding: 0;
-    }
-
-    #events li {
-      background: rgba(255, 0, 0, 0.2);
-      padding: 10px;
-      margin-bottom: 10px;
+    
+    .event-card {
+      background: rgba(255, 0, 0, 0.1);
+      padding: 15px;
+      margin-bottom: 15px;
       border-left: 3px solid #ff0000;
       border-radius: 5px;
+      position: relative;
+    }
+    
+    .event-card h4 {
+      color: #ff0000;
+      margin-bottom: 10px;
+    }
+    
+    .event-card .event-date {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .event-card .add-to-calendar {
+      background: rgba(255, 0, 0, 0.3);
+      border: 1px solid #ff0000;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+    
+    .event-card .add-to-calendar:hover {
+      background: rgba(255, 0, 0, 0.5);
+      transform: translateY(-2px);
+    }
+    
+    /* Ocultar formulario de admin para usuarios normales */
+    .admin-controls {
+      display: none;
+    }
+    
+    /* Mostrar solo si tiene la clave secreta */
+    body.show-admin .admin-controls {
+      display: block;
+    }
+    
+    .admin-toggle {
+      position: fixed;
+      bottom: 60px;
+      right: 20px;
+      z-index: 1000;
+      background: #ff0000;
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
     }
 
     /* Footer */
@@ -314,22 +355,6 @@
         height: 120px;
       }
       
-      p {
-        font-size: 1rem;
-      }
-      
-      .social-btns .btn {
-        margin: 5px;
-        padding: 8px 15px;
-        min-width: 100px;
-        font-size: 0.9rem;
-      }
-
-      .calendar {
-        flex-direction: column;
-      }
-
-      /* Ajustar posición Z en móviles */
       .cube-face.front {
         transform: translateZ(60px);
       }
@@ -343,6 +368,17 @@
         transform: rotateY(-90deg) translateZ(60px);
       }
       
+      p {
+        font-size: 1rem;
+      }
+      
+      .social-btns .btn {
+        margin: 5px;
+        padding: 8px 15px;
+        min-width: 100px;
+        font-size: 0.9rem;
+      }
+      
       /* Ajustar botones superiores en móviles */
       .top-buttons {
         top: 10px;
@@ -353,6 +389,19 @@
       .btn-live, .btn-secondary {
         padding: 5px 10px;
         font-size: 0.8rem;
+      }
+      
+      .admin-calendar {
+        margin: 20px auto;
+        padding: 15px;
+      }
+      
+      .admin-toggle {
+        bottom: 50px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
       }
     }
   </style>
@@ -419,23 +468,38 @@
       <a href="https://www.flirt4free.com" target="_blank" class="btn btn-info text-white" data-translate="flirt4free">Flirt4Free</a>
     </div>
 
-    <!-- CALENDARIO DE STREAMS -->
-    <div class="stream-schedule">
+    <!-- CALENDARIO DE STREAMS MEJORADO -->
+    <div class="admin-calendar">
       <h2>📅 Próximos Streams</h2>
-      <div class="calendar">
-        <div class="event-form">
-          <h3>Agregar nuevo stream</h3>
-          <input type="text" id="event-title" placeholder="Título del stream" class="form-control mb-2">
-          <input type="datetime-local" id="event-date" class="form-control mb-2">
-          <button id="add-event" class="btn btn-danger">Programar</button>
+      
+      <!-- Formulario de admin (oculto para usuarios normales) -->
+      <div class="admin-controls admin-event-form">
+        <h3>Programar nuevo stream (Admin)</h3>
+        <div class="row g-2">
+          <div class="col-md-6">
+            <input type="text" id="admin-event-title" placeholder="Título del stream" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <input type="datetime-local" id="admin-event-date" class="form-control">
+          </div>
+          <div class="col-md-2">
+            <button id="publish-event" class="btn btn-danger w-100">Publicar</button>
+          </div>
         </div>
-        <div class="events-list">
-          <h3>Eventos programados</h3>
-          <ul id="events"></ul>
+      </div>
+      
+      <!-- Eventos publicados (visibles para todos) -->
+      <div class="published-events">
+        <h3>Streams Programados</h3>
+        <div id="published-events-list">
+          <!-- Los eventos se cargarán aquí dinámicamente -->
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Botón para activar modo admin (flotante) -->
+  <button class="admin-toggle" id="admin-toggle-btn">🔑</button>
 
   <!-- PIE DE PÁGINA -->
   <footer>
@@ -563,52 +627,97 @@
     });
 
     // =============================================
-    // CÓDIGO PARA EL CALENDARIO DE STREAMS
+    // CÓDIGO PARA EL CALENDARIO MEJORADO (VERSIÓN ADMIN/PÚBLICO)
     // =============================================
-
-    // Guardar eventos
-    let events = JSON.parse(localStorage.getItem('streamEvents')) || [];
-
-    // Mostrar eventos
-    function renderEvents() {
-      const list = document.getElementById('events');
-      list.innerHTML = events.map(event => `
-        <li>
-          <strong>${event.title}</strong><br>
-          📅 ${new Date(event.date).toLocaleString()}
-          <button class="btn btn-sm btn-outline-light ms-2" onclick="addToCalendar('${event.title}', '${event.date}')">
-            🗓️ Recordar
+    
+    // Clave secreta para activar modo admin (puedes cambiarla)
+    const ADMIN_SECRET = "Gwother937";
+    
+    // Datos de eventos (simulando "base de datos")
+    let publishedEvents = JSON.parse(localStorage.getItem('publishedEvents')) || [];
+    
+    // Función para renderizar eventos públicos
+    function renderPublishedEvents() {
+      const container = document.getElementById('published-events-list');
+      
+      if (publishedEvents.length === 0) {
+        container.innerHTML = '<div class="alert alert-dark">No hay streams programados aún. Vuelve pronto.</div>';
+        return;
+      }
+      
+      // Ordenar eventos por fecha (más cercanos primero)
+      const sortedEvents = [...publishedEvents].sort((a, b) => new Date(a.date) - new Date(b.date));
+      
+      container.innerHTML = sortedEvents.map(event => `
+        <div class="event-card">
+          <h4>${event.title}</h4>
+          <div class="event-date">📅 ${formatEventDate(event.date)}</div>
+          <p>No te pierdas este stream especial. ¡Agéndalo!</p>
+          <button class="add-to-calendar" onclick="addToCalendar('${event.title}', '${event.date}')">
+            🗓️ Agregar a mi calendario
           </button>
-        </li>
+          
+          <!-- Botón de eliminar (solo visible en modo admin) -->
+          <button class="btn btn-sm btn-outline-danger mt-2 admin-controls" 
+                  onclick="deleteEvent('${event.id}')" style="display: none;">
+            Eliminar
+          </button>
+        </div>
       `).join('');
     }
-
-    // Agregar nuevo evento
-    document.getElementById('add-event').addEventListener('click', () => {
-      const title = document.getElementById('event-title').value;
-      const date = document.getElementById('event-date').value;
+    
+    // Formatear fecha para mostrar
+    function formatEventDate(dateString) {
+      const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric', 
+        hour: '2-digit', 
+        minute: '2-digit',
+        timeZoneName: 'short'
+      };
+      return new Date(dateString).toLocaleDateString('es-ES', options);
+    }
+    
+    // Publicar nuevo evento (admin)
+    document.getElementById('publish-event').addEventListener('click', () => {
+      const title = document.getElementById('admin-event-title').value;
+      const date = document.getElementById('admin-event-date').value;
       
-      if (title && date) {
-        events.push({ title, date });
-        localStorage.setItem('streamEvents', JSON.stringify(events));
-        renderEvents();
-        
-        // Limpiar formulario
-        document.getElementById('event-title').value = '';
-        document.getElementById('event-date').value = '';
-        
-        // Opcional: Mostrar notificación
-        if (Notification.permission === "granted") {
-          new Notification(`🎥 Stream programado: ${title}`, {
-            body: `Se ha agregado a tu calendario para ${new Date(date).toLocaleString()}`
-          });
-        }
-      } else {
+      if (!title || !date) {
         alert('Por favor completa todos los campos');
+        return;
       }
+      
+      const newEvent = {
+        id: Date.now().toString(),
+        title,
+        date,
+        publishedAt: new Date().toISOString()
+      };
+      
+      publishedEvents.push(newEvent);
+      localStorage.setItem('publishedEvents', JSON.stringify(publishedEvents));
+      renderPublishedEvents();
+      
+      // Limpiar formulario
+      document.getElementById('admin-event-title').value = '';
+      document.getElementById('admin-event-date').value = '';
+      
+      alert('¡Stream publicado exitosamente!');
     });
-
-    // Añadir a Google Calendar
+    
+    // Eliminar evento (admin)
+    function deleteEvent(eventId) {
+      if (confirm('¿Estás seguro de eliminar este evento?')) {
+        publishedEvents = publishedEvents.filter(e => e.id !== eventId);
+        localStorage.setItem('publishedEvents', JSON.stringify(publishedEvents));
+        renderPublishedEvents();
+      }
+    }
+    
+    // Añadir a Google Calendar (para usuarios)
     function addToCalendar(title, date) {
       const startDate = new Date(date).toISOString().replace(/-|:|\.\d+/g, '');
       const endDate = new Date(new Date(date).getTime() + 2 * 60 * 60 * 1000).toISOString().replace(/-|:|\.\d+/g, '');
@@ -616,15 +725,29 @@
       const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startDate}/${endDate}&details=Transmisión en vivo de ${encodeURIComponent(title)}&location=${encodeURIComponent(window.location.href)}`;
       
       window.open(url, '_blank');
-      
-      // Opcional: Solicitar permisos para notificaciones
-      if (Notification.permission !== "granted") {
-        Notification.requestPermission();
-      }
     }
-
+    
+    // Toggle modo admin
+    document.getElementById('admin-toggle-btn').addEventListener('click', () => {
+      const password = prompt('Ingresa la clave de administrador:');
+      if (password === ADMIN_SECRET) {
+        document.body.classList.toggle('show-admin');
+        alert('Modo admin ' + (document.body.classList.contains('show-admin') ? 'activado' : 'desactivado'));
+      } else if (password) {
+        alert('Clave incorrecta');
+      }
+    });
+    
     // Cargar eventos al iniciar
-    document.addEventListener('DOMContentLoaded', renderEvents);
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPublishedEvents();
+      
+      // Verificar si hay parámetro de admin en la URL
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('admin') === ADMIN_SECRET) {
+        document.body.classList.add('show-admin');
+      }
+    });
   </script>
 </body>
 </html>
