@@ -10,35 +10,193 @@
 
   <!-- Estilos personalizados -->
   <link rel="stylesheet" href="styles.css">
+  
+  <style>
+    /* Estilos adicionales para el selector de idioma */
+    .language-selector {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+    
+    .dropdown-toggle::after {
+      margin-left: 0.5em;
+    }
+    
+    .profile-img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .main-content {
+      position: relative;
+      text-align: center;
+      padding-top: 60px;
+    }
+    
+    .social-btns {
+      margin: 20px 0;
+    }
+    
+    .social-btns .btn {
+      margin: 5px;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 30px;
+      background-color: #ff0202;
+    }
+  </style>
 </head>
 <body>
+
+  <!-- Selector de idioma -->
+  <div class="language-selector">
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        Español
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+        <li><a class="dropdown-item" href="#" data-lang="es">Español</a></li>
+        <li><a class="dropdown-item" href="#" data-lang="en">English</a></li>
+        <li><a class="dropdown-item" href="#" data-lang="de">Deutsch</a></li>
+        <li><a class="dropdown-item" href="#" data-lang="ru">Русский</a></li>
+        <li><a class="dropdown-item" href="#" data-lang="zh">中文</a></li>
+      </ul>
+    </div>
+  </div>
 
   <!-- CONTENIDO PRINCIPAL -->
   <div class="container main-content">
     <img src="MEDIA/4913958361112883528.jpg" alt="Foto de Gwother937" class="profile-img" />
 
-    <h1>Gwother937</h1>
-    <p>🔥 Atrévete a descubrir mi mundo exclusivo 🔥<br>
+    <h1 data-translate="title">Gwother937</h1>
+    <p data-translate="description">🔥 Atrévete a descubrir mi mundo exclusivo 🔥<br>
     Contenido premium, sensualidad sin límites y acceso directo a mí.</p>
 
-  <!-- BOTONES REDES -->
-<div class="social-btns">
-  <a href="https://onlyfans.com/Gwother937" target="_blank" class="btn btn-danger">OnlyFans</a>
-  <a href="https://t.me/Gwother937" target="_blank" class="btn btn-primary">Telegram</a>
-  <a href="https://www.instagram.com/Gwother937" target="_blank" class="btn btn-warning text-dark">Instagram</a>
-  <a href="https://wa.me/573001112233" target="_blank" class="btn btn-success">WhatsApp</a>
-  <a href="https://www.tiktok.com/@Gwother937" target="_blank" class="btn btn-dark">TikTok</a>
-  <a href="https://www.flirt4free.com" target="_blank" class="btn btn-info text-white">Flirt4Free</a>
-</div>
-
+    <!-- BOTONES REDES -->
+    <div class="social-btns">
+      <a href="https://onlyfans.com/Gwother937" target="_blank" class="btn btn-danger" data-translate="onlyfans">OnlyFans</a>
+      <a href="https://t.me/Gwother937" target="_blank" class="btn btn-primary" data-translate="telegram">Telegram</a>
+      <a href="https://www.instagram.com/Gwother937" target="_blank" class="btn btn-warning text-dark" data-translate="instagram">Instagram</a>
+      <a href="https://wa.me/573001112233" target="_blank" class="btn btn-success" data-translate="whatsapp">WhatsApp</a>
+      <a href="https://www.tiktok.com/@Gwother937" target="_blank" class="btn btn-dark" data-translate="tiktok">TikTok</a>
+      <a href="https://www.flirt4free.com" target="_blank" class="btn btn-info text-white" data-translate="flirt4free">Flirt4Free</a>
+    </div>
   </div>
 
   <!-- PIE DE PÁGINA -->
   <footer>
-    &copy; 2025 Gwother937. Todos los derechos reservados.
+    <span data-translate="copyright">&copy; 2025 Gwother937. Todos los derechos reservados.</span>
   </footer>
 
-  <!-- JavaScript personalizado -->
-  <script src="java.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- JavaScript personalizado para cambio de idioma -->
+  <script>
+    // Traducciones
+    const translations = {
+      es: {
+        title: "Gwother937",
+        description: "🔥 Atrévete a descubrir mi mundo exclusivo 🔥<br>Contenido premium, sensualidad sin límites y acceso directo a mí.",
+        onlyfans: "OnlyFans",
+        telegram: "Telegram",
+        instagram: "Instagram",
+        whatsapp: "WhatsApp",
+        tiktok: "TikTok",
+        flirt4free: "Flirt4Free",
+        copyright: "© 2025 Gwother937. Todos los derechos reservados."
+      },
+      en: {
+        title: "Gwother937",
+        description: "🔥 Dare to discover my exclusive world 🔥<br>Premium content, limitless sensuality and direct access to me.",
+        onlyfans: "OnlyFans",
+        telegram: "Telegram",
+        instagram: "Instagram",
+        whatsapp: "WhatsApp",
+        tiktok: "TikTok",
+        flirt4free: "Flirt4Free",
+        copyright: "© 2025 Gwother937. All rights reserved."
+      },
+      de: {
+        title: "Gwother937",
+        description: "🔥 Wage es, meine exklusive Welt zu entdecken 🔥<br>Premium-Inhalte, grenzenlose Sinnlichkeit und direkter Zugang zu mir.",
+        onlyfans: "OnlyFans",
+        telegram: "Telegram",
+        instagram: "Instagram",
+        whatsapp: "WhatsApp",
+        tiktok: "TikTok",
+        flirt4free: "Flirt4Free",
+        copyright: "© 2025 Gwother937. Alle Rechte vorbehalten."
+      },
+      ru: {
+        title: "Gwother937",
+        description: "🔥 Осмельтесь открыть для себя мой эксклюзивный мир 🔥<br>Премиум-контент, безграничная чувственность и прямой доступ ко мне.",
+        onlyfans: "OnlyFans",
+        telegram: "Telegram",
+        instagram: "Instagram",
+        whatsapp: "WhatsApp",
+        tiktok: "TikTok",
+        flirt4free: "Flirt4Free",
+        copyright: "© 2025 Gwother937. Все права защищены."
+      },
+      zh: {
+        title: "Gwother937",
+        description: "🔥 敢于探索我的专属世界 🔥<br>优质内容，无限性感，直接与我互动。",
+        onlyfans: "OnlyFans",
+        telegram: "Telegram",
+        instagram: "Instagram",
+        whatsapp: "WhatsApp",
+        tiktok: "TikTok",
+        flirt4free: "Flirt4Free",
+        copyright: "© 2025 Gwother937。保留所有权利。"
+      }
+    };
+
+    // Función para cambiar el idioma
+    function changeLanguage(lang) {
+      document.querySelector('html').lang = lang;
+      document.querySelector('#languageDropdown').textContent = 
+        lang === 'es' ? 'Español' : 
+        lang === 'en' ? 'English' : 
+        lang === 'de' ? 'Deutsch' : 
+        lang === 'ru' ? 'Русский' : '中文';
+      
+      // Actualizar todos los elementos con data-translate
+      document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[lang] && translations[lang][key]) {
+          if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+            element.value = translations[lang][key];
+          } else {
+            element.innerHTML = translations[lang][key];
+          }
+        }
+      });
+      
+      // Guardar preferencia de idioma
+      localStorage.setItem('preferredLanguage', lang);
+    }
+
+    // Event listeners para los items del dropdown
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+      item.addEventListener('click', function(e) {
+        e.preventDefault();
+        const lang = this.getAttribute('data-lang');
+        changeLanguage(lang);
+      });
+    });
+
+    // Cargar idioma preferido al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+      const preferredLanguage = localStorage.getItem('preferredLanguage') || 'es';
+      changeLanguage(preferredLanguage);
+    });
+  </script>
 </body>
 </html>
